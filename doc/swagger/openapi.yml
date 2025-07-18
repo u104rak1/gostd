@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: gostd API
+  description: サンプルAPI
+  version: 1.0.0
+  contact:
+    name: API Support
+servers:
+  - url: http://localhost:38080
+    description: Local
+
+paths:
+  # Book endpoints
+  /books:
+    $ref: "./app/book/register_book.yml#/paths/~1books"

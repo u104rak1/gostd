@@ -16,7 +16,7 @@ func StartServer() {
 	router := newRouter()
 
 	srv := &http.Server{
-		Addr:         ":8080",
+		Addr:         ":38080",
 		Handler:      router,
 		ReadTimeout:  0,
 		WriteTimeout: 0,

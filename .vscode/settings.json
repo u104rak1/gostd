@@ -22,12 +22,18 @@
     "editor.insertSpaces": false,           // インデントにタブ文字を使用（Goの標準）
     "editor.tabSize": 2                     // タブサイズを2に設定（通常は4だが、プロジェクト要件に応じて）
   },
-  "[json]": {                               // JSONファイル専用設定
+  "[json]": {                                                   // JSONファイル専用設定
     "editor.defaultFormatter": "vscode.json-language-features", // VSCode標準のJSONフォーマッターを使用
-    "editor.tabSize": 2,                    // JSONのインデントサイズを2スペースに設定
-    "editor.insertSpaces": false,           // インデントにタブ文字を使用
-    "editor.formatOnSave": true,            // JSON保存時の自動フォーマット有効
-    "editor.detectIndentation": false       // 既存ファイルのインデント自動検出を無効化（設定値を優先）
+    "editor.tabSize": 2,                                        // JSONのインデントサイズを2スペースに設定
+    "editor.insertSpaces": false,                               // インデントにタブ文字を使用
+    "editor.formatOnSave": true,                                // JSON保存時の自動フォーマット有効
+    "editor.detectIndentation": false                           // 既存ファイルのインデント自動検出を無効化（設定値を優先）
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml", // YAMLファイルのデフォルトフォーマッターを指定
+    "editor.formatOnSave": true,                     // 保存時に自動フォーマット
+    "editor.tabSize": 2,                             // インデントサイズを2に設定
+    "editor.insertSpaces": true                      // インデントにスペースを使用
   },
   "json.format.keepLines": false,           // JSON整形時に改行を保持しない（コンパクトに整形）
   "json.format.enable": true,               // JSON自動フォーマット機能を有効化

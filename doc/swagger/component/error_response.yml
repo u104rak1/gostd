@@ -1,0 +1,20 @@
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        type:
+          type: string
+          description: エラーの種類
+        title:
+          type: string
+          description: エラーのタイトル
+        status:
+          type: integer
+          description: HTTPステータスコード
+        detail:
+          type: string
+          description: エラーの詳細説明
+        insurance:
+          type: string
+          description: エラーの原因や解決方法に関する情報

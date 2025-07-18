@@ -1,4 +1,4 @@
-module gostd
+module github.com/u104rak1/gostd
 
 go 1.24.4
 

@@ -1,0 +1,183 @@
+openapi: 3.0.0
+info:
+  title: 図書登録API
+  description: 図書を新規登録するためのAPIです。
+  version: 1.0.0
+
+paths:
+  /books:
+    post:
+      tags:
+        - Book
+      summary: 図書の登録
+      description: |
+        新しい図書の情報を登録します。
+      operationId: registerBook
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          description: Bearerトークンを使用して認証します。
+          schema:
+            type: string
+            example: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        - name: Content-Type
+          in: header
+          required: true
+          description: リクエストのコンテンツタイプを指定します。
+          schema:
+            type: string
+            example: "application/json"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterBookRequest"
+            examples:
+              example1:
+                summary: 図書登録リクエストの例
+                value:
+                  title: "The Go Programming Language"
+                  author: "Alan A. A. Donovan"
+                  publishedDate: "2015-10-26"
+                  isbn: "978-0-1341-9378-6"
+                  description: "A comprehensive guide to programming in Go, covering syntax, best practices, and advanced features."
+      responses:
+        "201":
+          description: 成功レスポンス
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegisterBookResponse"
+              examples:
+                example1:
+                  summary: 登録成功
+                  value:
+                    id: 1
+                    message: "Registration successful"
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "../../component/error_response.yml#/components/schemas/ErrorResponse"
+              examples:
+                badRequest:
+                  summary: 不正なリクエスト
+                  value:
+                    type: "https://example.com/errors/bad-request"
+                    title: "Bad Request"
+                    status: 400
+                    detail: "Invalid request body."
+                    insurance: "Please check the request body."
+        "401":
+          description: 認証エラー
+          content:
+            application/json:
+              schema:
+                $ref: "../../component/error_response.yml#/components/schemas/ErrorResponse"
+              examples:
+                unauthorized:
+                  summary: 認証エラー
+                  value:
+                    type: "https://example.com/errors/unauthorized"
+                    title: "Unauthorized"
+                    status: 401
+                    detail: "Authentication credentials were missing or incorrect."
+                    insurance: "Please provide valid authentication credentials."
+        "403":
+          description: 権限エラー
+          content:
+            application/json:
+              schema:
+                $ref: "../../component/error_response.yml#/components/schemas/ErrorResponse"
+              examples:
+                forbidden:
+                  summary: 権限エラー
+                  value:
+                    type: "https://example.com/errors/forbidden"
+                    title: "Forbidden"
+                    status: 403
+                    detail: "You do not have permission to access this resource."
+                    insurance: "Please contact your administrator."
+        "409":
+          description: 競合エラー
+          content:
+            application/json:
+              schema:
+                $ref: "../../component/error_response.yml#/components/schemas/ErrorResponse"
+              examples:
+                conflict:
+                  summary: 競合エラー
+                  value:
+                    type: "https://example.com/errors/conflict"
+                    title: "Conflict"
+                    status: 409
+                    detail: "Resource already exists."
+                    insurance: "Please check the resource ID."
+        "422":
+          description: バリデーションエラー
+          content:
+            application/json:
+              schema:
+                $ref: "../../component/error_response.yml#/components/schemas/ErrorResponse"
+              examples:
+                unprocessableEntity:
+                  summary: バリデーションエラー
+                  value:
+                    type: "https://example.com/errors/unprocessable-entity"
+                    title: "Unprocessable Entity"
+                    status: 422
+                    detail: "Validation failed for one or more fields."
+                    insurance: "Please check the input data."
+        "500":
+          description: サーバー内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: "../../component/error_response.yml#/components/schemas/ErrorResponse"
+              examples:
+                internalServerError:
+                  summary: サーバー内部エラー
+                  value:
+                    type: "https://example.com/errors/internal-server-error"
+                    title: "Internal Server Error"
+                    status: 500
+                    detail: "An unexpected error occurred."
+                    insurance: "Please try again later."
+components:
+  schemas:
+    RegisterBookRequest:
+      type: object
+      required:
+        - title
+        - author
+        - publishedDate
+        - isbn
+      properties:
+        title:
+          type: string
+          description: 図書のタイトル
+        author:
+          type: string
+          description: 著者名
+        publishedDate:
+          type: string
+          format: date
+          description: 出版日
+        isbn:
+          type: string
+          description: ISBNコード
+        description:
+          type: string
+          description: 図書の説明
+    RegisterBookResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 登録された図書のID
+        message:
+          type: string
+          description: 登録成功メッセージ
