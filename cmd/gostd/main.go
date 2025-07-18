@@ -1,9 +1,7 @@
 package main
 
-import (
-	"fmt"
-)
+import "gostd/cmd/gostd/route"
 
 func main() {
-	fmt.Println("Hello, World!")
+	route.StartServer()
 }
