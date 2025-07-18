@@ -1,0 +1,39 @@
+{
+  // Go関連設定
+  "go.useLanguageServer": true,             // Go言語サーバー(gopls)を使用してコード補完・エラー検出を強化
+  "go.lintTool": "golangci-lint",           // 静的解析ツールにgolangci-lintを使用（複数のlinterを統合）
+  "go.lintOnSave": "package",               // ファイル保存時にパッケージ全体をlint実行
+  "go.vetOnSave": "package",                // ファイル保存時にgo vetでパッケージ全体の潜在的問題をチェック
+  "go.testOnSave": false,                   // ファイル保存時の自動テスト実行を無効化（手動実行で制御）
+  "go.coverOnSave": false,                  // ファイル保存時のカバレッジ測定を無効化（パフォーマンス向上）
+  "go.formatTool": "goimports",             // コードフォーマッターにgoimportsを使用（gofmt + import自動整理）
+  "go.inferGopath": true,                   // GOPATHを自動推測してワークスペース設定を簡素化
+
+  // 保存時の自動フォーマット
+  "editor.formatOnSave": true,              // ファイル保存時に自動でコードフォーマットを実行
+  "editor.codeActionsOnSave": {             // 保存時に実行するコードアクション
+    "source.organizeImports": "explicit"    // import文の自動整理・不要import削除を明示的に実行
+  },
+
+  // ファイル別フォーマッター設定
+  "[go]": {                                 // Goファイル専用設定
+    "editor.formatOnSave": true,            // Go ファイル保存時の自動フォーマット有効
+    "editor.defaultFormatter": "golang.go", // GoファイルのデフォルトフォーマッターにGo拡張を指定
+    "editor.insertSpaces": false,           // インデントにタブ文字を使用（Goの標準）
+    "editor.tabSize": 2                     // タブサイズを2に設定（通常は4だが、プロジェクト要件に応じて）
+  },
+  "[json]": {                               // JSONファイル専用設定
+    "editor.defaultFormatter": "vscode.json-language-features", // VSCode標準のJSONフォーマッターを使用
+    "editor.tabSize": 2,                    // JSONのインデントサイズを2スペースに設定
+    "editor.insertSpaces": false,           // インデントにタブ文字を使用
+    "editor.formatOnSave": true,            // JSON保存時の自動フォーマット有効
+    "editor.detectIndentation": false       // 既存ファイルのインデント自動検出を無効化（設定値を優先）
+  },
+  "json.format.keepLines": false,           // JSON整形時に改行を保持しない（コンパクトに整形）
+  "json.format.enable": true,               // JSON自動フォーマット機能を有効化
+
+  // その他の便利な設定
+  "files.autoSave": "onFocusChange",        // エディタのフォーカスが外れた時に自動保存実行
+  "files.trimTrailingWhitespace": true,     // ファイル保存時に行末の無駄な空白文字を自動削除
+  "editor.renderWhitespace": "boundary"     // 単語境界の空白文字のみ可視化（全体表示より見やすい）
+}
