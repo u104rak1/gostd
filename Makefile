@@ -1,4 +1,13 @@
-.PHONY: run help
+.PHONY: up run help
+
+up: ## コンテナを起動
+	docker-compose up -d
+
+rebuild: ## コンテナを再構築
+	docker-compose up -d --build
+
+down: ## コンテナを停止
+	docker-compose down
 
 run: ## アプリケーションを実行
 	go run cmd/gostd/main.go
