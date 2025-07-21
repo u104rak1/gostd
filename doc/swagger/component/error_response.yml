@@ -5,7 +5,7 @@ components:
       properties:
         type:
           type: string
-          description: エラーの種類
+          description: エラーの種類を示すURI
         title:
           type: string
           description: エラーのタイトル
@@ -15,6 +15,78 @@ components:
         detail:
           type: string
           description: エラーの詳細説明
-        insurance:
+        instance:
           type: string
-          description: エラーの原因や解決方法に関する情報
+          description: エラー発生リソースのURI（リクエストパス等）
+        errors:
+          type: array
+          items:
+            type: string
+          description: バリデーションエラーの詳細（422時のみ）
+  examples:
+    BadRequestExample:
+      summary: 不正なリクエスト
+      value:
+        type: "https://example.com/errors/bad-request"
+        title: "Bad Request"
+        status: 400
+        detail: "The request could not be processed due to invalid syntax or parameters."
+    UnauthorizedExample:
+      summary: 認証エラー
+      value:
+        type: "https://example.com/errors/unauthorized"
+        title: "Unauthorized"
+        status: 401
+        detail: "Authentication is required to access this resource."
+    ForbiddenExample:
+      summary: 権限エラー
+      value:
+        type: "https://example.com/errors/forbidden"
+        title: "Forbidden"
+        status: 403
+        detail: "You do not have permission to access this resource."
+    NotFoundExample:
+      summary: リソース未検出
+      value:
+        type: "https://example.com/errors/not-found"
+        title: "Not Found"
+        status: 404
+        detail: "The requested resource could not be found."
+    RequestTimeoutExample:
+      summary: リクエストタイムアウト
+      value:
+        type: "https://example.com/errors/request-timeout"
+        title: "Request Timeout"
+        status: 408
+        detail: "The request took too long to process and timed out."
+    ConfliectExample:
+      summary: 競合エラー
+      value:
+        type: "https://example.com/errors/conflict"
+        title: "Conflict"
+        status: 409
+        detail: "The request could not be completed due to a conflict with the current state of the resource."
+    TooManyRequestsExample:
+      summary: リクエスト過多
+      value:
+        type: "https://example.com/errors/too-many-requests"
+        title: "Too Many Requests"
+        status: 429
+        detail: "You have sent too many requests in a given amount of time."
+    UnprocessableEntityExample:
+      summary: バリデーションエラー
+      value:
+        type: "https://example.com/errors/unprocessable-entity"
+        title: "Unprocessable Entity"
+        status: 422
+        detail: "The input parameters are invalid. See the errors member for details."
+        errors:
+          - "title is required"
+          - "author is required"
+    InternalServerErrorExample:
+      summary: サーバー内部エラー
+      value:
+        type: "https://example.com/errors/internal-server-error"
+        title: "Internal Server Error"
+        status: 500
+        detail: "An unexpected error occurred."
