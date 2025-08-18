@@ -1,0 +1,29 @@
+# Go development environment with Delve debugger
+FROM golang:1.24.4-alpine
+
+# 必要なパッケージと開発ツールをインストール
+RUN apk add --no-cache git build-base wget && \
+    go install github.com/go-delve/delve/cmd/dlv@latest && \
+    go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest && \
+    go install go.uber.org/mock/mockgen@latest && \
+    go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest && \
+    wget -O- -nv https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.64.8
+
+# 作業ディレクトリを設定
+WORKDIR /workspace
+
+# Go modulesをキャッシュ用にコピー
+COPY go.mod go.sum* ./
+RUN go mod download
+
+# プロジェクトファイルをコピー
+COPY . .
+
+# ビルド（デバッグ情報付き）
+RUN go build -gcflags="all=-N -l" -o main ./cmd/gostd
+
+# ポートを公開
+EXPOSE 8080 2345
+
+# サーバーを起動しない（デバッガーで起動）
+CMD ["sleep", "infinity"]

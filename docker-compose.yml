@@ -1,0 +1,26 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: build/Dockerfile_local
+    container_name: gostd
+    networks:
+      - gostd-network
+    ports:
+      - "28080:8080"  # アプリケーションポート
+      - "22345:2345"  # Delveデバッガーポート
+    volumes:
+      - .:/workspace
+      - go-mod-cache:/go/pkg/mod
+    environment:
+      - CGO_ENABLED=0
+    command: ["/bin/sh", "-c", "while true; do sleep 30; done"] # コンテナを永続化（Delve・Goアプリは手動制御）
+    stdin_open: true
+    tty: true
+
+networks:
+  gostd-network:
+    driver: bridge
+
+volumes:
+  go-mod-cache:
