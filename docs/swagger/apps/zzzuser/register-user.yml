@@ -1,0 +1,146 @@
+paths:
+  /v1/users:
+    post:
+      summary: Register a new user
+      description: ユーザーを登録します。
+      operationId: registerUser
+      tags:
+        - ZzzUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+                - birthdate
+                - gender
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: user@example.com
+                  description: ユーザーのメールアドレス
+                password:
+                  type: string
+                  format: password
+                  minLength: 8
+                  maxLength: 24
+                  pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z0-9]).+$'
+                  example: Pa$$w0rd
+                  description: |
+                    パスワード（8〜24文字）。大文字・小文字・数値・記号をそれぞれ1文字以上含める必要があります。
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 50
+                  example: "山田 太郎"
+                  description: ユーザーの表示名（1〜50文字）
+                birthdate:
+                  type: string
+                  format: date
+                  example: "1990-01-01"
+                  description: 生年月日（YYYY-MM-DD）
+                gender:
+                  type: string
+                  enum:
+                    - man
+                    - woman
+                    - other
+                  example: man
+                  description: 性別（man, woman, other）
+      responses:
+        '201':
+          description: ユーザー登録に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: 無効なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/errors.yml#/BadRequest'
+        '408':
+          description: リクエストタイムアウト
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/errors.yml#/RequestTimeout'
+        '422':
+          description: 検証エラー
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/errors.yml#/UnprocessableEntity'
+              example:
+                title: "Unprocessable Entity"
+                status: 422
+                detail: "Validation failed: see errors for details"
+                errors:
+                  - "email: invalid format"
+                  - "password: must be 8-24 chars and include uppercase, lowercase, number, symbol"
+                  - "name: required (1-50 chars)"
+                  - "birthdate: must be YYYY-MM-DD"
+                  - "gender: must be one of [man, woman, other]"
+        '500':
+          description: サーバー内部エラー
+          content:
+            application/json:
+              schema:
+                $ref: '../../components/errors.yml#/InternalServerError'
+
+components:
+  schemas:
+    UserResponse:
+      type: object
+      required:
+        - id
+        - email
+        - name
+        - birthdate
+        - gender
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: "123e4567-e89b-12d3-a456-426614174000"
+          description: ユーザーの一意な ID
+        email:
+          type: string
+          format: email
+          example: user@example.com
+          description: 登録済みのメールアドレス
+        name:
+          type: string
+          example: "山田 太郎"
+          description: ユーザーの表示名（氏名）
+        birthdate:
+          type: string
+          format: date
+          example: "1990-01-01"
+          description: 生年月日（YYYY-MM-DD）
+        gender:
+          type: string
+          enum:
+            - man
+            - woman
+            - other
+          example: man
+          description: 性別
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-08-22T12:34:56Z"
+          description: 登録日時
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-08-22T12:34:56Z"
+          description: 更新日時

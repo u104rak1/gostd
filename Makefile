@@ -1,5 +1,8 @@
 .PHONY: build up down run stop rerun mod-tidy help
 
+##
+## -- Dockerコマンド --
+
 build: ## Docker イメージをビルド
 	docker-compose build
 
@@ -8,6 +11,9 @@ up: ## Docker コンテナを起動
 
 down: ## Docker コンテナを停止・削除
 	docker-compose down
+
+##
+## -- 開発コマンド --
 
 run: ## DelveデバッガーとAPIサーバーを同時起動
 	docker-compose exec -d backend dlv debug ./cmd/gostd --build-flags=-buildvcs=false --headless --listen=:2345 --api-version=2 --accept-multiclient --continue
@@ -26,8 +32,6 @@ rerun: ## make stop → make run
 mod-tidy: ## Go modulesを更新
 	docker-compose exec backend go mod tidy
 
-help: ## ヘルプを表示
+help:
 	@grep -E '(^##|^[a-zA-Z_-]+:.*?##)' $(MAKEFILE_LIST) | \
 		awk '/^##/ {print substr($$0, 4)} /^[a-zA-Z_-]+:/ {split($$0, a, ":.*?## "); printf "\033[36m%-16s\033[0m %s\n", a[1], a[2]}'
-
-

@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: gostd API
+  description: サンプル API
+  version: 1.0.0
+  contact:
+    name: API Support
+    email: support@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:28080
+    description: ローカル環境サーバー
+
+paths:
+  /health:
+    get:
+      summary: ヘルスチェック
+      description: サーバーの稼働状況を確認するエンドポイント
+      operationId: healthCheck
+      tags:
+        - Health
+      responses:
+        '200':
+          description: サーバーが正常に稼働中
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+
+  # User関連のエンドポイント
+  /v1/zzz-users:
+    $ref: './apps/zzzuser/register-user.yml#/paths/~1v1~1users'
+
+components:
+  # 共通コンポーネントの定義
+  schemas:
+    ErrorResponse:
+      $ref: './components/error.yml#/ErrorResponse'
+
+  # 共通レスポンス例
+  responses:
+    BadRequest:
+      $ref: './components/errors.yml#/BadRequest'
+    Unauthorized:
+      $ref: './components/errors.yml#/Unauthorized'
+    Forbidden:
+      $ref: './components/errors.yml#/Forbidden'
+    NotFound:
+      $ref: './components/errors.yml#/NotFound'
+    RequestTimeout:
+      $ref: './components/errors.yml#/RequestTimeout'
+    Conflict:
+      $ref: './components/errors.yml#/Conflict'
+    UnprocessableEntity:
+      $ref: './components/errors.yml#/UnprocessableEntity'
+    TooManyRequests:
+      $ref: './components/errors.yml#/TooManyRequests'
+    InternalServerError:
+      $ref: './components/errors.yml#/InternalServerError'
+
+tags:
+  - name: Health
+    description: ヘルスチェック関連
+  - name: ZzzUser
+    description: サンプルユーザー関連
+  - name: ZzzAuthn
+    description: サンプル認証関連

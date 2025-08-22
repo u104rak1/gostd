@@ -1,0 +1,206 @@
+ErrorResponse:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+    status:
+      type: integer
+      description: HTTPステータスコード
+    detail:
+      type: string
+      description: エラーの詳細説明
+    errors:
+      type: array
+      items:
+        type: string
+
+BadRequest:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Bad Request"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 400
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "The request is invalid or malformed. Please check your request parameters and try again."
+
+Unauthorized:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Unauthorized"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 401
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "Authentication is required. Please provide valid credentials to access this resource."
+
+Forbidden:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Forbidden"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 403
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "You don't have permission to access this resource. Please contact an administrator if you believe this is an error."
+
+NotFound:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Not Found"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 404
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "The requested resource could not be found. Please verify the URL and try again."
+
+RequestTimeout:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Request Timeout"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 408
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "The request timed out. Please try again later or contact support if the problem persists."
+
+Conflict:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Conflict"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 409
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "The request conflicts with the current state of the resource. Please resolve the conflict and try again."
+
+UnprocessableEntity:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Unprocessable Entity"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 422
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "The request is well-formed but contains semantic errors. Please check your input data and try again."
+    errors:
+      type: array
+      items:
+        type: string
+        description: エラーの詳細説明
+        example: "The 'email' field must be a valid email address."
+
+TooManyRequests:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Too Many Requests"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 429
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "Too many requests have been sent. Please wait before making additional requests."
+
+InternalServerError:
+  type: object
+  required:
+    - title
+    - status
+    - detail
+  properties:
+    title:
+      type: string
+      description: 人間が読めるエラーの要約
+      example: "Internal Server Error"
+    status:
+      type: integer
+      description: HTTPステータスコード
+      example: 500
+    detail:
+      type: string
+      description: エラーの詳細説明
+      example: "An unexpected error occurred on the server."
